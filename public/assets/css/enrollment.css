@@ -1,0 +1,466 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    background-color: rgba(0,0,0,0.4);
+}
+
+label {
+    color: black;
+    letter-spacing: 1px;
+}
+
+#main{
+    z-index: 1;
+    padding: 2px;
+    background-color: #73787e;
+}
+
+#main a{
+    z-index: 1;
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#logoutBtn{
+    float: right;
+    margin-right: 40px;
+}
+
+.sidenav {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    /* top: 114px; */
+    /* left: 0; */
+    background-color: #17191b;
+    overflow-x: hidden;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #818181;
+    display: block;
+    margin-top: 20px;
+    transition: none;
+}
+
+.sidenav a:hover {
+color: #af3d3d;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    transition: none;
+}
+
+.menu-items{
+    transition: none; 
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* height: auto; */
+    /* max-width: 1190px; */
+    max-height: 75vh;
+    overflow: auto;
+    width: 100vw;
+    position: fixed;
+    /* margin-top: 10%; */
+}
+
+
+.left {
+    background-color: #fff;
+    box-shadow: 10px 10px 10px 10px #888888;
+    border-radius: 10px;  
+    height: 50vh;
+    padding: 20px 30px 20px 30px; 
+    margin-right: 10px;
+    width: 70vw;
+    margin-top: 13%;
+    /* min-width: 300px; 
+    max-width: 600px; */
+    /* height: auto; */
+    /* min-height: 540px; */
+    /* border: 2px solid #020202; */
+    /* margin-top: -160px; */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* margin-bottom: 20px; */
+}
+
+th{
+    padding: 8px;
+}
+td{
+    padding: 2px;
+}
+th, td {
+    text-align: center;
+    /* padding: 5px; */
+    /* padding: auto; */
+    border-bottom: 2px solid #ddd;
+}
+
+th {
+    background-color: #d4d2d2;
+}
+
+input[type="text"] {
+    width: calc(100% - 139px);
+    /* padding: 5px; */
+    /* margin: 1px 0; */
+    /* margin-bottom: 0px; */
+    border: none;
+    border-bottom: 1px solid #ccc; 
+    background-color: transparent; 
+    outline: none; 
+    width:80%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 56px;
+    padding: 8px 0; 
+    margin: 0 10px; 
+}
+/* 
+.btn-container input[type="submit"] {
+    background-color: blue;
+    color: white;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+} */
+
+/* .search-container {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end;
+    gap: 10px; 
+    margin: 20px 10px 10px 20px;
+    width: 100%;
+} */
+
+
+.search-container {
+    position: absolute;
+    top: 10px; 
+    left: 220px; 
+    z-index: 1000; 
+    width: 250px;
+    padding: 10px;
+}   
+/* .search-container label {
+    font-weight: bold;
+    font-size: 16px;
+} */
+
+/* .search-container select {
+    padding: 8px;
+    border: 1px solid #ccc;
+} */
+
+.searchy {
+    display: flex;
+    align-items: center;
+    flex: 1; 
+    margin-left: auto;
+    background-color: white;
+
+}
+
+.searchy input[type="text"] {
+    margin-right: 0px;
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.searchy button {
+    background-color: #A83332;
+    color: white;
+    border: none;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+/* .searchy button:hover {
+    background-color: #4e5b63;
+}
+
+.search-container input[type="text"] {
+    border: 1px solid #ccc;
+    padding: 8px; 
+    float: right;
+    text-align: left;
+} */
+/* 
+.input-group {
+    align-items: center;
+    margin-top: 20px;
+} */
+
+/* .input-group input[type="text"] {
+    width: calc(100% - 86px);
+    margin-right: 10px;
+    margin-bottom: 0px;
+} */
+/* 
+.input-group button {
+    width: 40px;
+    background-color: transparent; 
+    border: none;
+    cursor: pointer;
+} */
+
+
+.form-buttons button{
+    background-color: #A83332;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #414242;
+    cursor: pointer;
+    margin-top: 30px;
+    padding: 10px 20px;
+}
+
+.form-buttons button:hover {
+    background-color: #4e5b63;
+}
+
+.btn-container button {
+    background-color: #A83332;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #414242;
+    cursor: pointer;
+    margin-top: 30px;
+    padding: 10px 20px;
+}
+
+.btn-container button:hover {
+    background-color: #4e5b63;
+}
+
+.form-buttons {
+    display: flex;
+    text-align: center;
+    justify-content: center; 
+    align-items: center;
+    gap: 56px;
+    padding: 0;     
+    margin: 0;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    
+}
+
+.action-buttons button {
+    background-color: transparent; 
+    border: none; 
+    cursor: pointer;
+    padding: 0; 
+    font-size: 22px;
+}
+
+.action-buttons button:hover {
+    color: #4e5b63; 
+}
+
+.save{
+    position: absolute;
+    bottom: 10px;
+    right: 16%;
+}
+
+.delete{
+    position: absolute;
+    top: 22%;
+    right: 16%;
+}
+/* 
+.parent-container label input{
+    margin-left: 24px;
+    margin-top: 10px;
+    padding: 20px; 
+} */
+
+
+  /* .navbar {
+    width: 25%;
+    height: 100%;
+    position: fixed;
+    left: 0; */
+    /* transition: left 1s;  */
+  /* } */
+
+/* .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    z-index: 1000;
+} */
+
+.header {
+    padding: 1px;
+    background-color: #781B1B;
+}
+
+/* .header,
+h1{
+    margin: 0px 0px;
+    font-weight: 400;
+} */
+/* 
+nav {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: black;
+    z-index: 1000;
+} */
+/* 
+  #mainContent {
+    margin-left: 0;
+  } */
+/* 
+  #mainContent.opened {
+    margin-left: 250px; 
+  } */
+/* 
+#mySidenav a {
+    transition: none; 
+} */
+
+  /* @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .logout-btn {
+    background-color: transparent;
+    border: none;
+    color: #000000;
+    font-size: 30px;
+    cursor: pointer;
+    float: right; 
+    margin-right: 20px; 
+  }
+
+  .logout-btn:hover {
+    color: #d3c7c7; 
+  }
+
+  .fas {
+    margin-left: 5px; 
+    margin-right: 29px;
+  } */
+/* 
+@media screen and (max-width: 768px) {
+.container {
+    flex-direction: column;
+    height: auto;
+}
+
+.left, .right {
+    width: 100%;
+    margin: 0;
+}
+
+.search-container {
+    justify-content: center;
+}
+
+input[type="text"], select {
+    width: 100%;
+}
+
+.form-buttons button, .btn-container button {
+    width: 100%;
+}
+
+.form-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    width: auto;
+    margin: 0 5px;
+}
+
+.parent-container {
+    padding: 10px;
+}
+} */
+
+/* .parent-container {
+margin-left: 24px;
+margin-top: 10px;
+padding: 20px;
+} */
+
+/* @media screen and (min-width: 768px) { */
+    /* .left,
+    .right {
+        height: 60%;
+    } */
+    /* .parent-container {
+        padding: 10px;
+    }
+    .parent-container label,
+    .parent-container input[type="text"] {
+        font-size: 10px;
+    }
+} */
+
+/* @media screen and (min-width: 1024px) {
+    .parent-container {
+        padding: 7px;
+    }
+    .parent-container label,
+    .parent-container input[type="text"] {
+        font-size: 14px;
+    }
+}
+
+.menu-items a {
+    padding: 8px;
+} */
+
+
+
+

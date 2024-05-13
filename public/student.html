@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <link rel="stylesheet" href="assets/css/student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/css/w3.css">
+    <style>
+        .scrollable-content {
+            max-height: 80vh;
+            overflow-y: auto; 
+        }
+        #my_camera{
+            width:200px;
+            height:150px;
+            border:1px solid #c0c0c0;
+            margin:auto;
+        }
+        #my_result{
+            width:200px;
+            height:150px;
+            border:1px solid #c0c0c0;
+            margin:auto;
+        }
+
+        #cameraContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #cameraView, #capturedImage {
+            text-align: center;
+        }
+
+        #my_camera img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        #buttonContainer {
+        margin-top: 10px; 
+}
+    </style>
+</head>
+<body>
+     <!-- HEADER -->
+	<div class="header">
+		<h2 style="color: white; margin-left: 34px;">SCHOOL V1.0</h2>
+	</div>
+    
+    <div ng-controller="navController">
+        <div id="main">
+            <a id="toggleBtn"  ng-click="toggleNav()">&#9776;</a>
+            <a id="logoutBtn"  ng-click="logout()"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+        
+        <!-- HAMBURGER MENU -->
+        <div id="mySidenav" class="sidenav" ng-style="sidenavStyle">
+            <a href="javascript:void(0)" class="closeNav" ng-click="closeNav()" style="color: white; float: right; margin-top: -65px;">&times;</a>
+            
+            <div class="menu-items">
+                <a ng-click="navTo('/student')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px;">
+                    STUDENT
+                </a>
+                <a ng-click="navTo('/subject')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    SUBJECT
+                </a>
+                <a  ng-click="navTo('/enrollment')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    ENROLLMENT
+                </a>   
+                <a ng-click="navTo('/report')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    REPORT
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" ng-controller="studentController">
+        <!-- LEFT SIDE FORM -->     
+        <div class="left">
+            <form>
+                <!-- CAMERA -->
+                <div id="cameraContainer">
+                    <div id="cameraView" ng-show="!capturedImage">
+                        <div id="my_camera"></div>
+                    </div>
+                    <div id="capturedImage" ng-show="capturedImage">
+                        <img ng-src="{{ capturedImage }}" alt="Captured Image">
+                    </div>
+                </div>
+
+                <!-- BUTTON FOR CAMERA AND RESULT -->
+                <div id="buttonContainer" style="display: flex; justify-content: center;">
+                    <button class="w3-button" ng-click="captureImage()" style="background-color: #A83332; color: white; margin-right: 10px;">Take Picture</button>
+                    <button class="w3-button" ng-click="retakePicture()" style="background-color: #A83332; color: white;">Retake Picture</button>
+                </div>
+        
+                <div style="margin-left: 24px; margin-top: 10px; height: 100%;" class="parent-container">
+                    <label for=""><i class="fas fa-id-card" ></i> ID NO</label><br>  
+                    <input type="text" id="idno" name="idno" ng-model="newIdno"><br><br>
+                    <label for=""><i class="fas fa-user"></i> LASTNAME</label><br>
+                    <input type="text" id="lastname" name="lastname" ng-model="newLastname"><br><br>
+                    <label for=""><i class="fas fa-user"></i> FIRSTNAME</label><br>
+                    <input type="text" id="firstname" name="firstname" ng-model="newFirstname"><br>
+                    <div class="input-group">
+                        <label for=""><i class="fas fa-book" ></i> Course</label><br>
+                        <input type="text" id="course" name="course" ng-model="newCourse">
+                        <select ng-model="selectedCourse" ng-change="changeCourse()">
+                            <option ng-repeat="course in courses" value="{{ course }}">{{ course }}</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for=""><i class="fas fa-graduation-cap" ></i> Level</label><br>
+                        <input type="text" id="level" name="level" ng-model="newLevel"> 
+                        <select ng-model="selectedLevel" ng-change="changeLevel()">
+                            <option ng-repeat="level in levels" value="{{ level }}">{{ level }}</option>
+                        </select>
+                    </div>
+
+                    <!-- SAVE AND CANCEL BUTTONS -->
+                    <div class="form-buttons">
+                        <button type="button" ng-click="addStudent()" ng-if="addFlag">Add</button>
+                        <button type="button" ng-click="updateStudent()" ng-if="editFlag">Update</button>
+                        <button type="reset" ng-click="reset()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+        <div class="right">
+            <!-- SEARCH BAR -->
+            <div class="search-container">
+                <label for="">PAGES</label>
+                <select ng-model="pageSize" ng-change="changePage()">
+                    <option ng-selected="{{ defaultPageSize == size }}" ng-repeat="size in pagesizes" value="{{ size }}">{{ size }}</option>
+                </select>
+                <!-- SEARCH BUTTON -->
+                <div style="margin-right: 4%; margin-left: 100px;">
+                    <div class="searchy">
+                        <input ng-model="search" type="text" placeholder="Search">
+                        <button ng-click="getStudents()"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- TABLE -->
+            <div class="scrollable-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>PROFILE</th>
+                            <th>ID No</th>
+                            <th>LASTNAME</th>
+                            <th>FIRSTNAME</th>
+                            <th>Crs-Lvl</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="student in students">
+                            <td>
+                                <!-- <img ng-src="assets/image/{{ student.image }}" alt="Student Image" style="max-width: 100px; max-height: 100px;"> -->
+                                <img ng-src="{{ student.imagePath }}" alt="{{ student.lastname }}, {{ student.firstname }} - {{ student.course }} ({{ student.level }})"  style="width: 70px; height: auto;" >
+                                <!-- <img ng-src="{{ student.imagePath }}" alt="Student Image" style="width: 100px; height: auto;"> -->
+                            </td>
+                            <td>{{ student.idno }}</td>
+                            <td>{{ student.lastname }} </td>    
+                            <td>{{ student.firstname }}</td> 
+                            <td>{{ student.course }}-{{ student.level }}</td>
+                            <td class="action-buttons" style="padding: 23px;">
+                                <button ng-click="editStudent(student)"><i class="fas fa-edit" style="color: #009865;"></i> </button>
+                                <button ng-click="deleteStudent(student.idno)"><i class="fas fa-trash-alt" style="color: red;"></i> </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- ANGLE DOUBLE BUTTONS -->
+            <div class="btn-container">
+                <button ng-click="prevList()"><i class="fas fa-angle-double-left"></i></button>
+                <button ng-click="nextList()"><i class="fas fa-angle-double-right"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

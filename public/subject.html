@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <link rel="stylesheet" href="assets/css/student.css">
+    <!-- <link rel="stylesheet" href="assets/css/subject.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/css/w3.css">
+</head>
+<body>
+     <!-- HEADER -->
+	<div class="header">
+		<h2 style="color: white; margin-left: 34px;">SCHOOL V1.0</h2>
+	</div>
+    
+    <div ng-controller="navController">
+        <div id="main">
+            <a id="toggleBtn"  ng-click="toggleNav()">&#9776;</a>
+            <a id="logoutBtn"  ng-click="logout()"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+        
+        <!-- HAMBURGER MENU -->
+        <div id="mySidenav" class="sidenav" ng-style="sidenavStyle">
+            <a href="javascript:void(0)" class="closeNav" ng-click="closeNav()" style="color: white; float: right; margin-top: -65px;">&times;</a>
+            
+            <div class="menu-items">
+                <a ng-click="navTo('/student')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px;">
+                    STUDENT
+                </a>
+                <a ng-click="navTo('/subject')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    SUBJECT
+                </a>
+                <a  ng-click="navTo('/enrollment')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    ENROLLMENT
+                </a>   
+                <a ng-click="navTo('/report')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    REPORT
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" ng-controller="subjectController">
+        <!-- LEFT SIDE FORM -->
+        <div class="left">
+            <form>
+                <div style="margin-left: 24px; margin-top: 17px;" class="parent-container">
+                    <label for="edpcode"><i class="fas fa-id-card"></i> EDP CODE</label><br>
+                    <input type="text" id="edpcode" name="edpcode" ng-model="newEdpcode"><br><br>
+                    <label for="subjectcode"><i class="fas fa-user"></i> SUBJECT CODE</label><br>
+                    <input type="text" id="subjectcode" name="subjectcode" ng-model="newSubjectcode"><br><br>  
+                    <label for="time"><i class="fas fa-user"></i> TIME</label><br>
+                    <input type="text" id="time" name="time" ng-model="newTime" ><br>
+
+                    <!-- CHECKBOX ~~ SCHEDULE ~~ MONDAY-FRIDAY -->
+                    <label for="">DAYS</label>
+                    <div class="checkbox-container-parent">
+                        <div class="checkbox-container">
+                            <label for="monday">M</label><br>
+                            <input type="checkbox" id="monday" name="monday"> <br>
+                        </div> 
+                        <div class="checkbox-container">
+                            <label for="tuesday">T</label><br>
+                            <input type="checkbox" id="tuesday" name="tuesday"> <br>
+                        </div>
+                        <div class="checkbox-container">
+                            <label for="wednesday">W</label><br>
+                            <input type="checkbox" id="wednesday" name="wednesday"> <br>
+                        </div>
+                        <div class="checkbox-container">
+                            <label for="thursday">TH</label><br>
+                            <input type="checkbox" id="thursday" name="thursday"> <br>
+                        </div>
+                        <div class="checkbox-container">
+                            <label for="friday">F</label><br>
+                            <input type="checkbox" id="friday" name="friday"> <br>
+                        </div>
+                        <div class="checkbox-container">
+                            <label for="saturday">SAT</label><br>
+                            <input type="checkbox" id="saturday" name="saturday"> <br>
+                        </div>
+                    </div>
+
+                    <br>
+                    <label for="room"><i class="fas fa-user" style="font-size: 18px ;"></i> ROOM</label><br>
+                    <input type="text" id="room" name="room" ng-model="newRoom" ><br>
+                    
+                    <!-- SAVE AND CANCEL BUTTONS -->
+                    <div class="form-buttons">
+                        <button type="button" ng-click="addSubject()" ng-if="addFlag">Add</button>
+                        <button type="button" ng-click="updateSubject()" ng-if="editFlag">Update</button>
+                        <button type="reset" ng-click="reset()">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+        <div class="right">
+            <!-- SEARCH BAR -->
+            <div class="search-container">
+                <label for="pages">PAGES</label>
+                <select ng-model="pageSize" ng-change="changePage()">
+                    <option ng-selected="{{ defaultPageSize == size }}" ng-repeat="size in pagesizes" value="{{ size }}">{{ size }}</option>
+                </select>
+                <!-- SEARCH BUTTON -->
+                <div style="margin-right: 4%; margin-left: 100px;">
+                    <div class="searchy">
+                        <input ng-model="search" type="text" placeholder="Search">
+                        <button ng-click="getSubjects()"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>   
+            </div>
+            <!-- TABLE -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>EdpNo</th>
+                        <th>Subject Code</th>
+                        <th>Time-Day</th>
+                        <th>Room</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="subject in subjects">
+                        <td>{{ subject.edpcode }}</td>
+                        <td>{{ subject.subjectcode }}</td>
+                        <td>{{ subject.time }}, {{ subject.days }}</td>
+                        <td>{{ subject.room }}</td>
+						<td class="action-buttons">
+                            <button ng-click="editSubject(subject)"><i class="fas fa-edit" style="color: #009865;"></i> </button>
+                            <button ng-click="deleteSubject(subject.edpcode)"><i class="fas fa-trash-alt" style="color: red;"></i> </button>
+                        </td>
+					</tr>
+                </tbody>
+            </table>
+            <!-- ANGLE DOUBLE BUTTONS -->
+            <div class="btn-container">
+                <button ng-click="prevList()"><i class="fas fa-angle-double-left"></i></button>
+                <button ng-click="nextList()"><i class="fas fa-angle-double-right"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

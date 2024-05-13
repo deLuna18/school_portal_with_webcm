@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <link rel="stylesheet" href="assets/css/enrollment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/css/w3.css">
+</head>
+<body>
+     <!-- HEADER -->
+	<div class="header">
+		<h2 style="color: white; margin-left: 34px;">SCHOOL V1.0</h2>
+	</div>
+    
+    <div ng-controller="navController">
+        <div id="main">
+            <a id="toggleBtn"  ng-click="toggleNav()">&#9776;</a>
+            <a id="logoutBtn"  ng-click="logout()"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+        
+        <!-- HAMBURGER MENU -->
+        <div id="mySidenav" class="sidenav" ng-style="sidenavStyle">
+            <a href="javascript:void(0)" class="closeNav" ng-click="closeNav()" style="color: white; float: right; margin-top: -65px;">&times;</a>
+            
+            <div class="menu-items">
+                <a ng-click="navTo('/student')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px;">
+                    STUDENT
+                </a>
+                <a ng-click="navTo('/subject')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    SUBJECT
+                </a>
+                <a  ng-click="navTo('/enrollment')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    ENROLLMENT
+                </a>   
+                <a ng-click="navTo('/report')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    REPORT
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container" id="formWrapper">
+        <div class="search-container">
+            <!-- Search IDNO -->
+            <div class="idno">
+                <div class="searchy">
+                    <input type="text" placeholder="Search IDNO" ng-model="searchIdno"> <br>
+                    <button ng-click="searchStudent()">GO</button>
+                </div>
+				<!-- Display Student Details -->
+					<div ng-show="showDetails" style="margin-top: 10px; font-weight: bold;">
+						{{ student.lastname | uppercase }}, {{ student.firstname | uppercase}}  {{ student.course | uppercase}}  {{ student.level }}
+					</div>
+            </div>
+
+            <br>
+            <!-- Search EDP CODE -->
+            <div class="edp">
+                <div class="searchy">
+                    <input type="text" placeholder="Search EDP CODE" ng-model="searchEdpcode">
+                    <button ng-click="searchByEdpcode()">SEARCH</button>
+                </div>
+            </div>
+        </div>
+        <div class="studentImage" ng-show="showStudentImage">
+            <img ng-src="{{ student.imagePath }}" alt="{{ student.lastname }}, {{ student.firstname }} - {{ student.course }} ({{ student.level }})"  style="max-width: 200px; max-height: 140px; position: absolute; left: 35%; top: 30px;"  >
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+        <div class="left">
+            <div>
+                <div class="delete">
+                    <button style="padding: 6px 14px 6px 14px; background-color: #A83332; font-size: 1em; border: none;" ng-click="deleteSelectedSubjects()">DELETE</button>
+                </div>
+            </div>
+            <!-- TABLE -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>EDP Code</th>
+                        <th>Subject Code</th>
+                        <th>Time</th>
+                        <th>Day</th>
+                        <th>Room</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    <tr ng-repeat="subject in subjects">
+					  <td>{{ subject.edpcode }}</td>
+					  <td>{{ subject.subjectcode | uppercase }}</td>
+					  <td>{{ subject.time | uppercase }}</td>
+					  <td>{{ subject.days | uppercase }}</td>
+					  <td>{{ subject.room | uppercase }}</td>
+					  <td><input type="checkbox" ng-model="subject.selected"></td>
+				  </tr>
+                </tbody>
+            </table>
+			<div ng-if="!subjects || subjects.length === 0">
+				<p>Search for an EDP Code to view subject details.</p>
+			</div>
+        </div>
+        <div>
+        </div>    
+        
+    </div>
+    <div class="save" style="display: flex;">
+        <p ng-if="enrollmentMessage" style="margin-right: 100px; font-weight: bold;">{{ enrollmentMessage }}</p>
+        <button style="padding: 6px 14px 6px 14px; background-color: #A83332; font-size: 1em; border: none;" ng-click="saveEnrollment()">SAVE</button>
+        
+    </div>
+</body>
+</html>

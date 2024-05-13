@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="icon" type="image/png" href="FAVI.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body ng-controller="LoginController">
+    <!-- LOGIN FORM -->
+    <form ng-submit="login()">
+        <div class="title"> 
+            <i class="fa fa-user"></i>
+            <div class="separator">WEB PORTAL</div>
+        </div>
+        <!-- EMAIL -->
+        <p>
+            <label>Email</label>
+            <div class="input-container">
+                <span><i class="fa fa-envelope icon"></i></span>
+                <input type="text" ng-model="email" required>
+            </div>
+        </p>
+        <!-- PASSWORD -->
+        <p>
+            <label>Password</label>
+            <div class="password-container">
+                <span><i class="fa fa-lock icon"></i></span>
+                <input type="password" ng-model="password" required>
+            </div>
+            <p class="error-message" ng-if="message">{{ message }}</p>
+        </p>
+        <!-- LOGIN BUTTON -->
+        <button type="submit">LOGIN <span><i class="fa fa-sign-in"></i></span></button>
+    </form>
+    
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/angular-route.min.js"></script>
+    <script src="assets/js/myapp.js"></script>
+</body>
+</html>

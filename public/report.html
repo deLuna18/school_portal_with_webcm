@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <link rel="stylesheet" href="assets/css/enrollment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <link rel="stylesheet" href="assets/css/w3.css">
+</head>
+<body>
+     <!-- HEADER -->
+	<div class="header">
+		<h2 style="color: white; margin-left: 34px;">SCHOOL V1.0</h2>
+	</div>
+    
+    <div ng-controller="navController">
+        <div id="main">
+            <a id="toggleBtn"  ng-click="toggleNav()">&#9776;</a>
+            <a id="logoutBtn"  ng-click="logout()"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+        
+        <!-- HAMBURGER MENU -->
+        <div id="mySidenav" class="sidenav" ng-style="sidenavStyle">
+            <a href="javascript:void(0)" class="closeNav" ng-click="closeNav()" style="color: white; float: right; margin-top: -65px;">&times;</a>
+            
+            <div class="menu-items">
+                <a ng-click="navTo('/student')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px;">
+                    STUDENT
+                </a>
+                <a ng-click="navTo('/subject')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    SUBJECT
+                </a>
+                <a  ng-click="navTo('/enrollment')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    ENROLLMENT
+                </a>   
+                <a ng-click="navTo('/report')" style="color: white; border: none; background: none; cursor: pointer; letter-spacing: 2px; font-size: 18px">
+                    REPORT
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container" id="formWrapper">
+        <div class="search-container">
+            <br><br>
+            <!-- Search EDP CODE -->
+            <div class="edp">
+                <div class="searchy">
+                    <input type="text" placeholder="Search EDP CODE" ng-model="searchSubjects">
+                    <button ng-click="searchSubject()">SEARCH</button>
+                </div>
+				<br>
+					<!-- Display Student Details -->
+					<div ng-show="showDetails">
+						{{subjectDetails.edpcode}}  {{ subjectDetails.subjectcode | uppercase }} {{ subjectDetails.time}}  {{ subjectDetails.day | uppercase}} {{ subjectDetails.room }}
+					</div>
+            </div>
+        </div>
+        <!-- RIGHT SIDE FORM -->
+        <div class="left">
+            <div>
+                <div class="delete">
+                    <button style="padding: 6px 14px 6px 14px; background-color: #A83332; font-size: 1em; border: none;" ng-click="deleteSelected()">DELETE</button>
+                </div>
+            </div>
+            <!-- TABLE -->
+            <table >
+            <thead>
+                <tr> 
+				    <th>PROFILE</th>
+                    <th>IDNO</th>
+                    <th>LASTNAME</th>
+                    <th>FIRSTNAME</th>
+                    <th>COURSE</th>
+                    <th>LEVEL</th>
+					<th>SELECT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="enroll in enrollment">
+                    <td><img ng-src="{{ enroll.student.imagePath }}" alt="Student Image" style="width: 50px; height: 50px; margin-right: 10px;"></td>
+   				    <td>{{ enroll.idno }}</td>
+                    <td>{{ enroll.lastname }}</td>
+                    <td>{{ enroll.firstname }}</td>
+                    <td>{{ enroll.course }}</td>
+                    <td>{{ enroll.level }}</td>
+					<td><input type="checkbox" ng-model="enroll.selected"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="!enrollment || enrollment.length === 0">
+            <p>Search for an EDP Code to check enrolled student in that subject.</p>
+        </div>
+                
+        </div>
+        
+    </div>
+    <div class="save">
+        <button style="padding: 6px 14px 6px 14px; background-color: #A83332; font-size: 1em; border: none;" ng-click="confirmSave()">SAVE</button>
+    </div>
+</body>
+</html>
